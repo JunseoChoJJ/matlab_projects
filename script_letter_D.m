@@ -1,0 +1,10 @@
+n = 11;
+t = 1:n;
+x = [-1 -0.9 -2 -2 0 3 4 2.8 1 0.5 1.2];
+y = [5 3 1 2 1.5 1.7 4 6.7 7 4.2 0.5];
+Sx = spline(t, x);
+Sy = spline(t, y);
+tt = linspace(1, n, 100);
+xx = ppval(Sx, tt);
+yy = ppval(Sy, tt);
+plot(xx, yy, 'LineWidth', 2);
