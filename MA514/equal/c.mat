@@ -1,0 +1,51 @@
+
+x = linspace(-1,1,21);
+fx = 1./(6 * x.^2+1);
+figure;plot(fx)
+legend('f(x)')
+n = 20;
+p = polyfit(x,fx,n);
+x = linspace(-1,1,41);
+fx = 1./(6 * x.^2+1);
+px = polyval(p,x);
+qx = fx - px
+[fx' px']
+figure;plot(x,fx)
+hold on
+plot(x,px)
+legend('f(x)','p(x)')
+ylim([-1 4])
+fileID = fopen('val.txt','w');
+fprintf(fileID,'%2.16f || %2.16f || %2.16f\n',fx,px,qx);
+fclose(fileID);
+
+n = 20
+for i = 1:n-1
+h(i) = t(i+1) - t(i);
+end
+for i = 1:n-1
+b(i) = (6 * y(i+1) - y(i)) / h(i);
+end
+u(1) = 2*(h(1) + h(2));
+v(1) = b(2) - b(1);
+for i = 2:n-1
+u(i) = 2*(h(i) + h(i-1)) - h(i-1) * h(i-1) / u(i-1);
+v(i) = b(i) - b(i-1) -h(i-1) * v(i-1) / u(i-1);
+end
+z(12) = 0;
+for i = n-1:-1:1
+z(i) = (v(i) - h(i) * z(i+1)) / u(i);
+end
+for i = 1:n-1
+A(i) = (z(i+1) - z(i)) / (6* h(i));
+end
+for i = 1:n-1
+B(i) = z(i) / 2;
+end
+for i = 1: n-1
+C(i) = -h(i) * z(i+1) / 6 -h(i) * z(i) / 3 + (y(i+1) - y(i)) / h(i);
+end
+S = @(p)y(i)+(p-x(i))*(C(i)+(p-x(i))*(B(i)+(p-x(i))*A(i)));
+for i = 1:n-1
+  Q(i) = S(i);
+end
